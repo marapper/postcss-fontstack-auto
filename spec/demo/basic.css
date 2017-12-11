@@ -33,3 +33,11 @@ pre {
 h1 {
     font-family: 'Lucida Sans Typewriter';
 }
+
+.list {
+    font-family: "Consolas" !important;
+}
+
+.head {
+    font: 15px/20px 'Baskerville' !important;
+}

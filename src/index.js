@@ -24,8 +24,9 @@ function expandFontShorthand(decl, fontStacks) {
   if (decl.value.match(/,/)) {
     return;
   }
+
   Object.keys(fontStacks).forEach(function (fontName) {
-    var onlyOneFont = fontName + '$';
+    var onlyOneFont = '("|\'?)' + fontName + '("|\')?(\s*!important)?$';
     var regEx = new RegExp(onlyOneFont, 'i');
 
     decl.value = decl.value.replace(regEx, fontStacks[fontName]);
