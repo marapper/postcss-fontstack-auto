@@ -26,8 +26,24 @@ span {
     font: 30px Arial;
 }
 
+span {
+    font: Lucida Sans Typewriter;
+}
+
+.no-postfix-font {
+    font: 30px Arial No;
+}
+
+.no-prefix-font {
+    font: bold 15px No Arial;
+}
+
 pre {
     font: 30px Courier, monospace;
+}
+
+h1 {
+    font-family:      Lucida Sans Typewriter;
 }
 
 h1 {

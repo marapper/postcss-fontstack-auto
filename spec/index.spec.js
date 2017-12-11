@@ -4,14 +4,6 @@ const path = require('path');
 
 const plugin = require('../src/');
 
-function run(input, output, options) {
-  return postcss([plugin({fontstacks: options})]).process(input)
-    .then(result => {
-      expect(result.css).toEqual(output);
-      expect(result.warnings().length).toBe(0);
-    });
-}
-
 it('should be ok with basic fontstack', () => {
   const name = 'basic';
   let featurePath = path.join('spec', 'demo');
