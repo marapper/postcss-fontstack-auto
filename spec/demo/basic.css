@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'Lucida Sans Typewriter';
+}
+
+html, body {
+    font-family: 'Open Sans', Arial;
+}
+
+*, * span {
+    font: 'Open Sans', Arial;
+}
+
+ul li ol {
+    font: 'Open Sans', Arial, sans-serif;
+}
+
+p {
+    font: Arial;
+}
+
+abbr {
+    font-family: Arial;
+}
+
+span {
+    font: 30px Arial;
+}
+
+pre {
+    font: 30px Courier, monospace;
+}
+
+h1 {
+    font-family: 'Lucida Sans Typewriter';
+}

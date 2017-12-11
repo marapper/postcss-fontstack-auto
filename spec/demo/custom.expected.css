@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Extra Stack';
+}
+
+body {
+    font-family: "Extra Stack", "Moar Fonts", Extra, serif;
+}
+
+h1 {
+    font-family: "Extra Stack", "Moar Fonts", Extra, serif;
+}
+
+h2 {
+    font-family: 'simhei', 'Extra Stack';
+}

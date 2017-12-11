@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'Lucida Sans Typewriter';
+}
+
+html, body {
+    font-family: 'Open Sans', Arial;
+}
+
+*, * span {
+    font: 'Open Sans', Arial;
+}
+
+ul li ol {
+    font: 'Open Sans', Arial, sans-serif;
+}
+
+p {
+    font: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+abbr {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+span {
+    font: 30px Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+pre {
+    font: 30px Courier, monospace;
+}
+
+h1 {
+    font-family: "Lucida Sans Typewriter", "Lucida Console", monaco, "Bitstream Vera Sans Mono", monospace;
+}

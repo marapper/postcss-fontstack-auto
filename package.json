@@ -1,40 +1,52 @@
 {
-  "name": "postcss-fontstack",
-  "version": "0.1.0",
-  "description": "easy insertion of font stacks into font-family declarations",
+  "name": "postcss-fontstack-auto",
+  "version": "0.0.1",
+  "description": "Automatically font stacks into font-family declarations",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest tests/*.js",
+    "test": "jest spec/*.js",
     "build": "babel src --out-dir dist",
-    "line": "eslint src/*.js"
+    "lint": "eslint src/*.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tomoyuen/postcss-fontstack.git"
+    "url": "git+https://github.com/marapper/postcss-fontstack-auto.git"
   },
   "keywords": [
     "postcss-plugin",
-    "font-stack"
+    "css",
+    "font",
+    "font-family",
+    "font-weight",
+    "css font stack"
   ],
-  "author": "tomoyuen",
+  "contributors": [
+    "tomoyuen",
+    "marapper"
+  ],
+  "files": [
+    "LICENSE",
+    "dist"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tomoyuen/postcss-fontstack/issues"
+    "url": "https://github.com/marapper/postcss-fontstack-auto/issues"
   },
-  "homepage": "https://github.com/tomoyuen/postcss-fontstack#readme",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
-    "babel-jest": "^20.0.3",
+    "babel-jest": "^21.2.0",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "eslint": "^4.1.0",
     "eslint-config-postcss": "^2.0.2",
-    "jest": "^20.0.4"
+    "jest": "^21.2.1"
   },
   "dependencies": {
-    "postcss": "^6.0.3"
+    "object-assign": "^4.0.1",
+    "postcss": "^6.0.14",
+    "postcss-value-parser": "^3.3.0"
   },
   "jest": {
     "transform": {},

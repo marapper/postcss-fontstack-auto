@@ -3,7 +3,9 @@
   "extends": "eslint-config-postcss",
   "rules": {
     "indent": ["error", 2],
-    "max-len": 0
+    "max-len": 0,
+    "no-var": 0,
+    "prefer-arrow-callback": 0
   },
   "env": {
     "jest": true
