@@ -1,31 +1,77 @@
 'use strict';
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
+var assign = require('object-assign');
 var postcss = require('postcss');
-var fontstacks = require('./fontstacks-config.js');
+var valueParser = require('postcss-value-parser');
 
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+var defaultOptions = require('./fontstacks-config.js');
+
+function comparableFontName(name) {
+  return name.toLowerCase();
+}
+
+function expandFamily(decl, fontStacks) {
+  var tree = valueParser(decl.value);
+  if (tree.nodes.length !== 1) {
+    return;
+  }
+
+  var fontName = comparableFontName(tree.nodes[0].value);
+  if (fontStacks[fontName]) {
+    decl.value = fontStacks[fontName];
+  }
+}
+
+function expandFontShorthand(decl, fontStacks) {
+  if (decl.value.match(/,/)) {
+    return;
+  }
+
+  Object.keys(fontStacks).forEach(function (fontName) {
+    var onlyOneFont = '("|\'?)' + fontName + '("|\')?(\s*!important)?$';
+    var regEx = new RegExp(onlyOneFont, 'i');
+
+    decl.value = decl.value.replace(regEx, fontStacks[fontName]);
   });
 }
 
-module.exports = postcss.plugin('fontstack', function (options) {
-  fontstacks = _extends(fontstacks, options.fontstacks);
+function transform(decl, fontStacks) {
+  if (decl.prop === 'font-family') {
+    expandFamily(decl, fontStacks);
+  } else if (decl.prop === 'font') {
+    expandFontShorthand(decl, fontStacks);
+  }
+}
 
-  return function (root) {
-    root.walkRules(function (rule) {
+function normalizeFontName(name) {
+  if (name.match(/\s/)) {
+    return '"' + name + '"';
+  }
+  return name;
+}
+
+function getFontStack(opts) {
+  var fontStackOptions = assign(defaultOptions, opts.fontstacks);
+
+  var fontStacks = {};
+  Object.keys(fontStackOptions).forEach(function (fontName) {
+    fontStacks[comparableFontName(fontName)] = fontStackOptions[fontName].map(normalizeFontName).join(', ');
+  });
+
+  return fontStacks;
+}
+
+module.exports = postcss.plugin('postcss-fontstack-auto', function (opts) {
+  var fontStacks = getFontStack(opts);
+
+  return function (css) {
+    css.walkRules(function (rule) {
+      // its ignore at-rules so it's ok
       rule.walkDecls(function (decl) {
-        var value = decl.value;
-        if (value.indexOf('fontstack(') !== -1) {
-          console.log('found fontstack');
-          var fontstackRequested = value.match(/\(([^)]+)\)/)[1].replace(/["']/g, '');
-          fontstackRequested = toTitleCase(fontstackRequested);
-          var fontstack = fontstacks[fontstackRequested];
-          var firstFont = value.substr(0, value.indexOf('fontstack('));
-          var newValue = firstFont + fontstack;
-          decl.value = newValue;
+        if (decl.type === 'decl') {
+          if (decl.prop === 'font-family' || decl.prop === 'font') {
+            transform(decl, fontStacks);
+          }
         }
       });
     });
