@@ -2,7 +2,6 @@
 
 var assign = require('object-assign');
 var postcss = require('postcss');
-var valueParser = require('postcss-value-parser');
 
 var defaultOptions = require('./fontstacks-config.js');
 
@@ -11,12 +10,11 @@ function comparableFontName(name) {
 }
 
 function expandFamily(decl, fontStacks) {
-  var tree = valueParser(decl.value);
-  if (tree.nodes.length !== 1) {
+  if (decl.value.match(/,/)) {
     return;
   }
 
-  var fontName = comparableFontName(tree.nodes[0].value);
+  var fontName = comparableFontName(decl.value.replace(/['"]/g, ''));
   if (fontStacks[fontName]) {
     decl.value = fontStacks[fontName];
   }
@@ -28,10 +26,10 @@ function expandFontShorthand(decl, fontStacks) {
   }
 
   Object.keys(fontStacks).forEach(function (fontName) {
-    var onlyOneFont = '("|\'?)' + fontName + '("|\')?(\s*!important)?$';
+    var onlyOneFont = '(^|px\\s+)("|\')?' + fontName + '("|\')?(\\s*!important)?$';
     var regEx = new RegExp(onlyOneFont, 'i');
 
-    decl.value = decl.value.replace(regEx, fontStacks[fontName]);
+    decl.value = decl.value.replace(regEx, '$1' + fontStacks[fontName]);
   });
 }
 
@@ -70,7 +68,7 @@ module.exports = postcss.plugin('postcss-fontstack-auto', function (opts) {
       // its ignore at-rules so it's ok
       rule.walkDecls(function (decl) {
         if (decl.type === 'decl') {
-          if (decl.prop === 'font-family' || decl.prop === 'font') {
+          if (['font-family', 'font'].includes(decl.prop)) {
             transform(decl, fontStacks);
           }
         }
