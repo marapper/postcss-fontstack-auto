@@ -49,7 +49,8 @@ function normalizeFontName(name) {
 }
 
 function getFontStack(opts) {
-  const fontStackOptions = assign(defaultOptions, opts.fontstacks);
+  const list = opts ? opts.fontstacks : {};
+  const fontStackOptions = assign(defaultOptions, list || {});
 
   const fontStacks = {};
   Object.keys(fontStackOptions).forEach(fontName => {

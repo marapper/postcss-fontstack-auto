@@ -3,25 +3,40 @@ const fs = require('fs');
 const path = require('path');
 
 const plugin = require('../src/');
-const fontstacks = {
-  'Extra Stack': ['Extra Stack', 'Moar Fonts', 'Extra', 'serif']
-};
 
 function run(input, output, options) {
-  return postcss([plugin({ fontstacks: options })]).process(input)
+  return postcss([plugin({fontstacks: options})]).process(input)
     .then(result => {
       expect(result.css).toEqual(output);
       expect(result.warnings().length).toBe(0);
     });
 }
 
-const features = ['basic', 'custom'];
-features.forEach(name => {
+it('should be ok with basic fontstack', () => {
+  const name = 'basic';
   let featurePath = path.join('spec', 'demo');
   let inputCSS = fs.readFileSync(path.join(featurePath, `${name}.css`), 'utf8');
   let expectedCSS = fs.readFileSync(path.join(featurePath, `${name}.expected.css`), 'utf8');
 
-  it(`test ${name} feature: `, () => {
-    return run(inputCSS, expectedCSS, name === 'custom' ? fontstacks : {});
-  });
+  return postcss([plugin()]).process(inputCSS)
+    .then(result => {
+      expect(result.css).toEqual(expectedCSS);
+      expect(result.warnings().length).toBe(0);
+    });
+});
+
+it('should be ok with custom fontstack', () => {
+  const name = 'custom';
+  let featurePath = path.join('spec', 'demo');
+  let inputCSS = fs.readFileSync(path.join(featurePath, `${name}.css`), 'utf8');
+  let expectedCSS = fs.readFileSync(path.join(featurePath, `${name}.expected.css`), 'utf8');
+
+  const fontstacks = {
+    'Extra Stack': ['Extra Stack', 'Moar Fonts', 'Extra', 'serif']
+  };
+  return postcss([plugin({ fontstacks })]).process(inputCSS)
+    .then(result => {
+      expect(result.css).toEqual(expectedCSS);
+      expect(result.warnings().length).toBe(0);
+    });
 });
