@@ -9,7 +9,7 @@
     "build": "npm run lint && npm test && babel src --out-dir dist",
     "preversion": "npm run build && npm test && git rev-parse --abbrev-ref HEAD",
     "version": "git add dist",
-    "postversion": "git push origin HEAD && git push origin HEAD --follow-tags"
+    "postversion": "git push origin HEAD && git push origin HEAD --follow-tags && npm publish"
   },
   "repository": {
     "type": "git",
