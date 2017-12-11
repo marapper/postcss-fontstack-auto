@@ -12,6 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/marapper/postcss-fontstack-auto.git"
   },
+  "homepage": "https://github.com/marapper/postcss-fontstack-auto#readme",
   "keywords": [
     "postcss-plugin",
     "css",
