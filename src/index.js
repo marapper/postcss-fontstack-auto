@@ -3,11 +3,11 @@ const postcss = require('postcss');
 
 const defaultOptions = require('./fontstacks-config.js');
 
-function comparableFontName(name) {
+function comparableFontName (name) {
   return name.toLowerCase();
 }
 
-function expandFamily(decl, fontStacks) {
+function expandFamily (decl, fontStacks) {
   if (decl.value.match(/,/)) {
     return;
   }
@@ -18,20 +18,21 @@ function expandFamily(decl, fontStacks) {
   }
 }
 
-function expandFontShorthand(decl, fontStacks) {
+function expandFontShorthand (decl, fontStacks) {
   if (decl.value.match(/,/)) {
     return;
   }
 
-  Object.keys(fontStacks).forEach((fontName) => {
+  Object.keys(fontStacks).forEach(fontName => {
     const onlyOneFont = '(^|px\\s+)("|\')?' + fontName + '("|\')?(\\s*!important)?$';
+    // eslint-disable-next-line security/detect-non-literal-regexp
     const regEx = new RegExp(onlyOneFont, 'i');
 
     decl.value = decl.value.replace(regEx, '$1' + fontStacks[fontName]);
   });
 }
 
-function transform(decl, fontStacks) {
+function transform (decl, fontStacks) {
   if (decl.prop === 'font-family') {
     expandFamily(decl, fontStacks);
   } else if (decl.prop === 'font') {
@@ -39,14 +40,14 @@ function transform(decl, fontStacks) {
   }
 }
 
-function normalizeFontName(name) {
+function normalizeFontName (name) {
   if (name.match(/\s/)) {
     return '"' + name + '"';
   }
   return name;
 }
 
-function getFontStack(opts) {
+function getFontStack (opts) {
   const list = opts ? opts.fontstacks : {};
   const fontStackOptions = assign(defaultOptions, list || {});
 
@@ -58,7 +59,7 @@ function getFontStack(opts) {
   return fontStacks;
 }
 
-module.exports = postcss.plugin('postcss-fontstack-auto', (opts) => {
+module.exports = postcss.plugin('postcss-fontstack-auto', opts => {
   const fontStacks = getFontStack(opts);
 
   return css => {
