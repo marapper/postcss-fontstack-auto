@@ -10,7 +10,7 @@ it('should be ok with basic fontstack', () => {
   let inputCSS = fs.readFileSync(path.join(featurePath, `${name}.css`), 'utf8');
   let expectedCSS = fs.readFileSync(path.join(featurePath, `${name}.expected.css`), 'utf8');
 
-  return postcss([plugin()]).process(inputCSS)
+  return postcss([plugin()]).process(inputCSS, { from: undefined })
     .then(result => {
       expect(result.css).toEqual(expectedCSS);
       expect(result.warnings().length).toBe(0);
@@ -26,7 +26,7 @@ it('should be ok with custom fontstack', () => {
   const fontstacks = {
     'Extra Stack': ['Extra Stack', 'Moar Fonts', 'Extra', 'serif']
   };
-  return postcss([plugin({ fontstacks })]).process(inputCSS)
+  return postcss([plugin({ fontstacks })]).process(inputCSS, { from: undefined })
     .then(result => {
       expect(result.css).toEqual(expectedCSS);
       expect(result.warnings().length).toBe(0);

@@ -12,7 +12,7 @@ function expandFamily (decl, fontStacks) {
     return;
   }
 
-  const fontName = comparableFontName(decl.value.replace(/['"]/g, ''));
+  const fontName = comparableFontName(decl.value.replace(/["']/g, ''));
   if (fontStacks[fontName]) {
     decl.value = fontStacks[fontName];
   }

@@ -15,7 +15,7 @@ function expandFamily(decl, fontStacks) {
     return;
   }
 
-  var fontName = comparableFontName(decl.value.replace(/['"]/g, ''));
+  var fontName = comparableFontName(decl.value.replace(/["']/g, ''));
 
   if (fontStacks[fontName]) {
     decl.value = fontStacks[fontName];

@@ -5,7 +5,8 @@
     "indent": ["error", 2],
     "max-len": 0,
     "prefer-let/prefer-let": 0,
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "prettierx/options": "off"
   },
   "env": {
     "jest": true
