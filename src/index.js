@@ -79,7 +79,35 @@ module.exports = (opts = {}) => {
           decl.value = newValue;
         }
       }
+
+      // https://github.com/morishitter/postcss-font-smoothing/blob/master/index.js
+      if (decl.prop === 'font-smoothing') {
+        if (decl.value === 'antialiased') {
+          decl.cloneBefore({
+            prop: '-webkit-' + decl.prop
+          });
+
+          decl.cloneBefore({
+            prop: '-moz-osx-' + decl.prop,
+            value: 'grayscale'
+          });
+        }
+
+        if (decl.value === 'grayscale') {
+          decl.cloneBefore({
+            prop: '-webkit-' + decl.prop,
+            value: 'antialiased'
+          });
+
+          decl.cloneBefore({
+            prop: '-moz-osx-' + decl.prop
+          });
+        }
+
+        decl.remove();
+      }
     }
-  }
-}
-module.exports.postcss = true
+  };
+};
+
+module.exports.postcss = true;

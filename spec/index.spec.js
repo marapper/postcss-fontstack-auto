@@ -32,3 +32,16 @@ it('should be ok with custom fontstack', () => {
       expect(result.warnings().length).toBe(0);
     });
 });
+
+it('should be postcss-fontsmooting antialiased', () => {
+  const name = 'smoothing';
+  let featurePath = path.join('spec', 'demo');
+  let inputCSS = fs.readFileSync(path.join(featurePath, `${name}.css`), 'utf8');
+  let expectedCSS = fs.readFileSync(path.join(featurePath, `${name}.expected.css`), 'utf8');
+
+  return postcss([plugin({})]).process(inputCSS, { from: undefined })
+    .then(result => {
+      expect(result.css).toEqual(expectedCSS);
+      expect(result.warnings().length).toBe(0);
+    });
+});

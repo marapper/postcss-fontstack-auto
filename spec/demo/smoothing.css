@@ -1,0 +1,13 @@
+h1 {
+    font-smoothing: antialiased;
+}
+
+h2 {
+    font-smoothing: grayscale;
+}
+
+h3 {
+    font-smoothing: notexist;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
