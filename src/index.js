@@ -26,7 +26,6 @@ function getExpandedFontShorthand (decl, fontStacks) {
   let result = decl.value;
   Object.keys(fontStacks).forEach(fontName => {
     const onlyOneFont = '(^|px\\s+)("|\')?' + fontName + '("|\')?(\\s*!important)?$';
-    // eslint-disable-next-line security/detect-non-literal-regexp
     const regEx = new RegExp(onlyOneFont, 'i');
 
     result = result.replace(regEx, '$1' + fontStacks[fontName]);
